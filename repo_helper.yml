@@ -1,0 +1,32 @@
+# Configuration for 'repo_helper' (https://github.com/domdfcoding/repo_helper)
+---
+modname: 'emoji-strings'
+copyright_years: '2021'
+author: 'Dominic Davis-Foster'
+email: 'dominic@davis-foster.co.uk'
+username: 'domdfcoding'
+version: '0.0.0'
+license: 'MIT'
+short_desc: "Adds support for emoji-strings in Python, which convert emoji names into actual emoji."
+
+use_whey: true
+min_coverage: 100
+enable_docs: False
+enable_conda: False
+
+python_versions:
+ - 3.6
+ - 3.7
+ - 3.8
+ - 3.9
+ - 3.10-dev
+ - pypy36
+ - pypy37
+
+classifiers:
+ - 'Development Status :: 4 - Beta'
+ - 'Intended Audience :: Developers'
+
+keywords:
+ - emoji
+ - fstring
