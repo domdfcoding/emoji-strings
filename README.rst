@@ -116,3 +116,45 @@ To install with ``pip``:
 	$ python -m pip install emoji-strings
 
 .. end installation
+
+Usage
+---------
+
+Emoji strings (g-strings for short) are similar to Python's f-strings.
+However, rather than using curly braces, g-strings use colons to mark emoji in a string.
+For example, in the following sentence, ``:rocket:`` denotes a substitution, in this case for a 🚀 emoji:
+
+	Deploy the app :rocket:
+
+In a Python source file, you can write this as:
+
+.. code-block:: python
+
+	print(g"Deploy the app :rocket:")
+	#     ^ note the "g" prefix character
+
+which would print::
+
+	Deploy the app 🚀
+
+Ta da! You no longer need to remember unicode code points or use cumbersome emoji entry dialogs.
+To enable this magic, add the following comment to the top of your python source file::
+
+	# -*- coding: emoji_strings -*-
+
+and add ``emoji-strings`` to your ``requirements.txt`` file.
+
+Disclaimer
+------------
+
+This is a joke.
+
+While this absolutely does work I made it for fun.
+Someone had asked me if, since Python has f-strings, it also has g-strings?
+It does now.
+
+Credits
+----------
+
+Based on `future-fstrings <https://pypi.org/project/future-fstrings/>`_,
+and uses the `emoji library <https://pypi.org/project/emoji/>`_ to parse the emoji names.

@@ -9,8 +9,8 @@ version: '0.0.0'
 license: 'MIT'
 short_desc: "Adds support for emoji-strings in Python, which convert emoji names into actual emoji."
 
+min_coverage: 95
 use_whey: true
-min_coverage: 100
 enable_docs: False
 enable_conda: False
 
@@ -30,3 +30,6 @@ classifiers:
 keywords:
  - emoji
  - fstring
+
+tox_unmanaged:
+ - check-wheel-contents

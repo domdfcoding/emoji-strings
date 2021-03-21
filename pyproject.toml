@@ -1,5 +1,5 @@
 [build-system]
-requires = [ "whey",]
+requires = [ "whey", "whey-pth",]
 build-backend = "whey"
 
 [project]
@@ -28,3 +28,10 @@ python-implementations = [ "CPython", "PyPy",]
 platforms = [ "Windows", "macOS", "Linux",]
 license-key = "MIT"
 package = "emoji_strings"
+
+[tool.whey-pth]
+name = "aaaaa_emoji_strings"
+pth-content = "import sys, emoji_strings; del sys.modules['emoji_strings']\n"
+
+[tool.whey.builders]
+wheel = "whey_pth_wheel"
