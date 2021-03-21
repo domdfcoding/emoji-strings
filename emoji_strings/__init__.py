@@ -55,7 +55,13 @@ utf_8 = encodings.search_function("utf8")
 
 class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
 
-	def _buffer_decode(self, input, errors, final):  # pragma: no cover
+	def _buffer_decode(  # pragma: no cover
+		self,
+		input,  # noqa: A002  # pylint: disable=redefined-builtin
+		errors,
+		final,
+		):
+
 		if final:
 			return decode(input, errors)
 		else:
@@ -114,9 +120,15 @@ def _make_gstring(tokens):
 
 
 def decode(
-		input: bytes,
+		input: bytes,  # noqa: A002  # pylint: disable=redefined-builtin
 		errors: str = "strict",
 		) -> Tuple[str, int]:
+	"""
+	Decode the given source as UTF-8 and convert emoji.
+
+	:param input:
+	:param errors:
+	"""
 
 	u, length = utf_8.decode(input, errors)
 	tokens = tokenize_rt.src_to_tokens(u)
@@ -162,7 +174,7 @@ codec_map = {
 
 
 @lru_cache(1)
-def register():  # pragma: no cover
+def register():  # pragma: no cover  # noqa: D103
 	codecs.register(codec_map.get)
 
 
