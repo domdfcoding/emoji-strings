@@ -4,7 +4,7 @@ build-backend = "whey"
 
 [project]
 name = "emoji-strings"
-version = "0.0.0"
+version = "0.1.0"
 description = "Adds support for emoji-strings in Python, which convert emoji names into actual emoji."
 readme = "README.rst"
 keywords = [ "emoji", "fstring",]
