@@ -55,12 +55,12 @@ utf_8 = encodings.search_function("utf8")
 
 class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
 
-	def _buffer_decode(  # pragma: no cover
-		self,
-		input,  # noqa: A002  # pylint: disable=redefined-builtin
-		errors,
-		final,
-		):
+	def _buffer_decode(
+			self,
+			input,  # noqa: A002  # pylint: disable=redefined-builtin
+			errors,
+			final,
+			):  # pragma: no cover
 
 		if final:
 			return decode(input, errors)
