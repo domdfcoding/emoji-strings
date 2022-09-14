@@ -10,12 +10,15 @@ from typing import Callable, Dict
 import pytest
 
 try:
+	# 3rd party
 	from emoji.unicode_codes.en import EMOJI_UNICODE_ENGLISH  # type: ignore
 except ImportError:
 	try:
+		# 3rd party
 		from emoji.unicode_codes import get_emoji_unicode_dict
 		EMOJI_UNICODE_ENGLISH = get_emoji_unicode_dict("en")
 	except ImportError:
+		# 3rd party
 		from emoji.unicode_codes import get_unicode_dict  # type: ignore[attr-defined]
 		EMOJI_UNICODE_ENGLISH = get_unicode_dict("en")
 
