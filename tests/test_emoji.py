@@ -8,7 +8,16 @@ from typing import Callable, Dict
 
 # 3rd party
 import pytest
-from emoji.unicode_codes.en import EMOJI_UNICODE_ENGLISH  # type: ignore
+
+try:
+	from emoji.unicode_codes.en import EMOJI_UNICODE_ENGLISH  # type: ignore
+except ImportError:
+	try:
+		from emoji.unicode_codes import get_emoji_unicode_dict
+		EMOJI_UNICODE_ENGLISH = get_emoji_unicode_dict("en")
+	except ImportError:
+		from emoji.unicode_codes import get_unicode_dict  # type: ignore[attr-defined]
+		EMOJI_UNICODE_ENGLISH = get_unicode_dict("en")
 
 # this package
 from emoji_strings import StreamReader, decode
