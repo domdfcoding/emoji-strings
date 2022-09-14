@@ -51,6 +51,7 @@ __email__: str = "dominic@davis-foster.co.uk"
 tokenize_rt._string_prefixes = frozenset("bfrug")
 
 utf_8 = encodings.search_function("utf8")
+assert utf_8 is not None
 
 
 class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
@@ -130,7 +131,7 @@ def decode(
 	:param errors:
 	"""
 
-	u, length = utf_8.decode(input, errors)
+	u, length = utf_8.decode(input, errors)  # type: ignore[union-attr]
 	tokens = tokenize_rt.src_to_tokens(u)
 
 	to_replace: List[Tuple[int, Optional[int]]] = []
