@@ -161,15 +161,16 @@ def decode(
 # codec api
 
 codec_map = {
-		name: codecs.CodecInfo(
-				name=name,
-				encode=utf_8.encode,
-				decode=decode,
-				incrementalencoder=utf_8.incrementalencoder,
-				incrementaldecoder=IncrementalDecoder,
-				streamreader=StreamReader,
-				streamwriter=utf_8.streamwriter,
-				)
+		name:
+				codecs.CodecInfo(
+						name=name,
+						encode=utf_8.encode,
+						decode=decode,
+						incrementalencoder=utf_8.incrementalencoder,
+						incrementaldecoder=IncrementalDecoder,
+						streamreader=StreamReader,
+						streamwriter=utf_8.streamwriter,
+						)
 		for name in ("emoji-strings", "emoji_strings", "gstrings")
 		}
 
