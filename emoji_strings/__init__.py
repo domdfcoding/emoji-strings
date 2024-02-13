@@ -34,11 +34,11 @@ import codecs
 import encodings
 import io
 from functools import lru_cache
-from typing import List, Optional, Tuple
+from typing import IO, Iterable, List, Optional, Tuple
 
 # 3rd party
 import emoji
-import tokenize_rt  # type: ignore
+import tokenize_rt  # type: ignore[import]
 
 __all__ = ["decode", "register"]
 
@@ -58,10 +58,10 @@ class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
 
 	def _buffer_decode(
 			self,
-			input,  # noqa: A002  # pylint: disable=redefined-builtin
-			errors,
-			final,
-			):  # pragma: no cover
+			input: bytes,  # noqa: A002  # pylint: disable=redefined-builtin
+			errors: str,
+			final: bool,
+			) -> Tuple[str, int]:  # pragma: no cover
 
 		if final:
 			return decode(input, errors)
@@ -69,31 +69,32 @@ class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
 			return '', 0
 
 
-class StreamReader(utf_8.streamreader):  # type: ignore
+class StreamReader(utf_8.streamreader):  # type: ignore[name-defined]
 	# decode is deferred to support better error messages
-	_stream = None
-	_decoded = False
+	_stream: Optional[IO] = None
+	_decoded: bool = False
 
 	@property
-	def stream(self):
+	def stream(self) -> IO:
+		assert self._stream is not None
 		if not self._decoded:
-			text, _ = decode(self._stream.read())  # type: ignore
+			text, _ = decode(self._stream.read())
 			self._stream = io.BytesIO(text.encode("UTF-8"))
 			self._decoded = True
 		return self._stream
 
 	@stream.setter
-	def stream(self, stream):
+	def stream(self, stream: IO) -> None:
 		self._stream = stream
 		self._decoded = False
 
 
-def _is_g(token):
+def _is_g(token: tokenize_rt.Token) -> bool:
 	prefix, _ = tokenize_rt.parse_string_literal(token.src)
 	return 'g' in prefix.lower()
 
 
-def _make_gstring(tokens):
+def _make_gstring(tokens: Iterable[tokenize_rt.Token]) -> List[str]:
 	new_tokens = []
 
 	for i, token in enumerate(tokens):
@@ -132,7 +133,7 @@ def decode(
 	"""
 
 	u, length = utf_8.decode(input, errors)  # type: ignore[union-attr]
-	tokens = tokenize_rt.src_to_tokens(u)
+	tokens: List[tokenize_rt.Token] = tokenize_rt.src_to_tokens(u)
 
 	to_replace: List[Tuple[int, Optional[int]]] = []
 	start: Optional[int] = None
@@ -146,7 +147,7 @@ def decode(
 				seen_f = _is_g(token)
 		elif token.name == "STRING":
 			end = i + 1
-			seen_f |= _is_g(token)
+			seen_f |= _is_g(token)  # type: ignore[operator]
 		elif token.name not in tokenize_rt.NON_CODING_TOKENS:
 			if seen_f:
 				to_replace.append((start, end))
@@ -175,7 +176,7 @@ codec_map = {
 
 
 @lru_cache(1)
-def register():  # pragma: no cover  # noqa: D103
+def register() -> None:  # pragma: no cover  # noqa: D103
 	codecs.register(codec_map.get)
 
 

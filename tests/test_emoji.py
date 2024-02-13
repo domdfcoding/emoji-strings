@@ -11,7 +11,7 @@ import pytest
 
 try:
 	# 3rd party
-	from emoji.unicode_codes.en import EMOJI_UNICODE_ENGLISH  # type: ignore
+	from emoji.unicode_codes.en import EMOJI_UNICODE_ENGLISH  # type: ignore[import]
 except ImportError:
 	try:
 		# 3rd party
@@ -26,7 +26,7 @@ except ImportError:
 from emoji_strings import StreamReader, decode
 
 
-def _param(name: str, symbol: str):
+def _param(name: str, symbol: str):  # noqa: MAN002
 	return pytest.param(name, symbol, id=name)
 
 
