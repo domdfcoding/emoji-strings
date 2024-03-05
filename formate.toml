@@ -44,4 +44,4 @@ known_third_party = [
     "pytest_timeout",
     "tokenize_rt",
 ]
-known_first_party = "emoji_strings"
+known_first_party = [ "emoji_strings",]
