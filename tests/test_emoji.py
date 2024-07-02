@@ -4,7 +4,7 @@ import codecs
 import io
 from itertools import starmap
 from textwrap import dedent
-from typing import Callable, Dict
+from typing import Any, Callable, Dict
 
 # 3rd party
 import pytest
@@ -13,14 +13,23 @@ try:
 	# 3rd party
 	from emoji.unicode_codes.en import EMOJI_UNICODE_ENGLISH  # type: ignore[import]
 except ImportError:
-	try:
-		# 3rd party
-		from emoji.unicode_codes import get_emoji_unicode_dict
-		EMOJI_UNICODE_ENGLISH = get_emoji_unicode_dict("en")
-	except ImportError:
-		# 3rd party
-		from emoji.unicode_codes import get_unicode_dict  # type: ignore[attr-defined]
-		EMOJI_UNICODE_ENGLISH = get_unicode_dict("en")
+	# 3rd party
+	from emoji.unicode_codes import EMOJI_DATA, LANGUAGES, STATUS
+
+	_EMOJI_UNICODE: Dict[str, Any] = {lang: None for lang in LANGUAGES}
+
+	def get_emoji_unicode_dict(lang: str) -> Dict:
+		if _EMOJI_UNICODE[lang] is None:
+			_EMOJI_UNICODE[lang] = {
+					data[lang]: emj
+					for emj,
+					data in EMOJI_DATA.items()
+					if lang in data and data["status"] <= STATUS["fully_qualified"]
+					}
+
+		return _EMOJI_UNICODE[lang]
+
+	EMOJI_UNICODE_ENGLISH = get_emoji_unicode_dict("en")
 
 # this package
 from emoji_strings import StreamReader, decode
