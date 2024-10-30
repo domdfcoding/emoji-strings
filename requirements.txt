@@ -1,2 +1,2 @@
 emoji>=1.2.0
-tokenize-rt>=4.1.0,<7.0.0
+tokenize-rt<7.0.0,>=4.1.0
