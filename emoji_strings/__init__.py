@@ -34,11 +34,14 @@ import codecs
 import encodings
 import io
 from functools import lru_cache
-from typing import IO, Iterable, List, Optional, Tuple
+from typing import IO, TYPE_CHECKING, Iterable, List, Optional, Tuple
+
+if TYPE_CHECKING:
+	from typing_extensions import Buffer
 
 # 3rd party
 import emoji
-import tokenize_rt  # type: ignore[import]
+import tokenize_rt  # type: ignore[import-untyped]
 
 __all__ = ["decode", "register"]
 
@@ -58,7 +61,7 @@ class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
 
 	def _buffer_decode(
 			self,
-			input: bytes,  # noqa: A002  # pylint: disable=redefined-builtin
+			input: "Buffer",  # noqa: A002  # pylint: disable=redefined-builtin
 			errors: str,
 			final: bool,
 			) -> Tuple[str, int]:  # pragma: no cover
@@ -122,7 +125,7 @@ def _make_gstring(tokens: Iterable[tokenize_rt.Token]) -> List[str]:
 
 
 def decode(
-		input: bytes,  # noqa: A002  # pylint: disable=redefined-builtin
+		input: "Buffer",  # noqa: A002  # pylint: disable=redefined-builtin
 		errors: str = "strict",
 		) -> Tuple[str, int]:
 	"""

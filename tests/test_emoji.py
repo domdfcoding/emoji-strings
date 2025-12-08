@@ -11,7 +11,7 @@ import pytest
 
 try:
 	# 3rd party
-	from emoji.unicode_codes.en import EMOJI_UNICODE_ENGLISH  # type: ignore[import]
+	from emoji.unicode_codes.en import EMOJI_UNICODE_ENGLISH  # type: ignore[import-not-found]
 except ImportError:
 	# 3rd party
 	from emoji.unicode_codes import EMOJI_DATA, LANGUAGES, STATUS
