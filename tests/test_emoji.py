@@ -82,7 +82,7 @@ def test_ast_parse(capsys):
 	def foo():
 		print(g'Starting :package:')
 		print(g'Done :rocket:')
-	"""
+	""",
 			).encode("UTF-8")
 
 	tree = ast.parse(source)
@@ -110,7 +110,7 @@ def test_ast_parse_raw(capsys):
 		print(g'Starting :package:')
 		print(rg"¯\\_(ツ)_/¯")
 		print(g'Done :rocket:')
-	"""
+	""",
 			).encode("UTF-8")
 
 	tree = ast.parse(source)
